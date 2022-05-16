@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Files</title>
+</head>
+<body>
+  {% if loaded_data1 %}
+  <h3>First 50 rows</h3>
+  {{loaded_data1 | safe}}
+  {% endif %}
+  <br>
+  <br>
+  {% if loaded_data %}
+  {{loaded_data | safe }}
+  
+  <br>
+  <br>
+  {% endif %}
+  {% if loaded_data2 %}
+  <h3>Last 50 rows </h3>
+  {{loaded_data2 | safe}}
+ {% endif %}
+</body>
+</html>
