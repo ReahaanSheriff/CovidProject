@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import os
-from django_tables2.tables import Table
 import pandas as pd
+from decouple import config
 # Create your views here.
 def home(request):
     folder='my_folder/'
@@ -21,7 +21,7 @@ def home(request):
             msg = 'Only csv file supported'
             return render(request, 'index.html', {'msg':msg})
     elif request.method == 'GET':
-        path = "G:/SEMESTER_6/covidForcastingProject/covid19Prediction/my_folder"
+        path = config('FOLDER_LOCATION')
         dir_list = os.listdir(path)
         return render(request, 'index.html',{'all_files':dir_list})
     else:
@@ -30,7 +30,7 @@ def home(request):
 
 
 def datatable(request, fileCSV):
-    path = "G:/SEMESTER_6/covidForcastingProject/covid19Prediction/my_folder"
+    path = config('FOLDER_LOCATION')
     data = pd.read_csv(path+'/'+fileCSV,encoding='latin-1', on_bad_lines='skip')#on_bad_lines='skip'    sep='delimiter'
     if(len(data) >= 100):
         first50 = data.head(50)
