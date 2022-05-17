@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     {% load static %}
+    
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,5 +25,9 @@
   <h3>Last 50 rows </h3>
   {{loaded_data2 | safe}}
  {% endif %}
+
+<a href="{% url 'displayGraph' g %}">Image</a>
+
+
 </body>
 </html>

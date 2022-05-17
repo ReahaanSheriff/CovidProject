@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import os
 import pandas as pd
 from decouple import config
+import matplotlib.pyplot as plt
 # Create your views here.
 def home(request):
     folder='my_folder/'
@@ -37,11 +38,21 @@ def datatable(request, fileCSV):
         last50 = data.tail(50)
         data1_html = first50.to_html()
         data2_html = last50.to_html()
-        context = {'loaded_data1': data1_html,'loaded_data2':data2_html}
+        #graph = data.plot(color='#5D3FD3', figsize=(15,6))
+        #graph_dis = plt.show()
+        context = {'loaded_data1': data1_html,'loaded_data2':data2_html,'g':fileCSV}#'graph':graph_dis
         return render(request, 'files.html', context)
     else:
         data1_html = data.to_html()
         context = {'loaded_data': data1_html}
         return render(request, 'files.html', context)
- 
+
+def displayGraph(request,g):
+    path = config('FOLDER_LOCATION')
+    data = pd.read_csv(path+'/'+g,encoding='latin-1', on_bad_lines='skip')#on_bad_lines='skip'    sep='delimiter'
+    graph = data.plot(color='#5D3FD3', figsize=(15,6),kind='line')
+    graph_dis = plt.show()
+    return redirect('/')
+
+
 
